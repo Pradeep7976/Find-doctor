@@ -1,0 +1,9 @@
+.navbar {
+  background: rgb(2, 0, 36) !important;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(101, 144, 235, 1) 27%,
+    rgba(0, 212, 255, 1) 71%
+  ) !important ;
+}

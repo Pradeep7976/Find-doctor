@@ -1,0 +1,8 @@
+.css-gkv3fg {
+  grid-template-columns: disable !important;
+}
+.ratinp {
+  input:focus {
+    outline: none;
+  }
+}

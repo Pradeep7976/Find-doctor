@@ -14,7 +14,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 function Home() {
-  const port = "http://localhost:7000";
+  const port = "https://famous-puce-raven.cyclic.app";
   let navigate = useNavigate();
   function nav() {
     navigate("/doctors");
@@ -61,7 +61,7 @@ function Home() {
               lineHeight={1.2}
               fontSize={useBreakpointValue({ base: "xl", md: "2xl" })}
             >
-              Lorem ipsum dolor sit amet consectetur adipiscing elit sed
+              {/* Lorem ipsum dolor sit amet consectetur adipiscing elit sed */}
             </Text>
             <Stack direction={"row"}>
               <Button
@@ -80,7 +80,7 @@ function Home() {
                 _hover={{ bg: "blue.500" }}
                 onClick={addnav}
               >
-                Regester doctors
+                Register doctor
               </Button>
               {/* <Button
               bg={"whiteAlpha.300"}

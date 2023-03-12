@@ -31,7 +31,9 @@ function TestimonialCard(props) {
           fontSize={"20px"}
           pb={4}
         >
-          {props.hname + " hospital"}
+          {props.hname.charAt(0).toUpperCase() +
+            props.hname.slice(1) +
+            " Hospital"}
         </chakra.p>
         <chakra.p fontFamily={"Work Sans"} fontWeight={"bold"} fontSize={14}>
           <chakra.span
@@ -39,7 +41,7 @@ function TestimonialCard(props) {
             fontWeight={"medium"}
             color={"gray.500"}
           >
-            {props.street}
+            {props.street.charAt(0).toUpperCase() + props.street.slice(1)}
           </chakra.span>
           <chakra.span
             fontFamily={"Inter"}
@@ -52,7 +54,7 @@ function TestimonialCard(props) {
             Mon-sat
           </Text>
           <Text fontFamily={"Almarai"} fontWeight={"300"}>
-            Available from {props.ftime} to  {props.ttime} (24hrs)
+            Available from {props.ftime} to {props.ttime} (24hrs)
           </Text>
           <Text fontFamily={"Almarai"} fontWeight={"300"}>
             {props.cmpltadd}

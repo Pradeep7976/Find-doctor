@@ -44,15 +44,17 @@ function DocForm() {
         address: address,
         date: date,
       };
-      axios.post("http://localhost:7000/reg", dat).then((resp) => {
-        if (resp.data.log === false) {
-          alert("Email already present");
-          setcheck(true);
-          return;
-        } else {
-          navigate("/login");
-        }
-      });
+      axios
+        .post("https://famous-puce-raven.cyclic.app/reg", dat)
+        .then((resp) => {
+          if (resp.data.log === false) {
+            alert("Email already present");
+            setcheck(true);
+            return;
+          } else {
+            navigate("/login");
+          }
+        });
     }
   }
 
@@ -102,7 +104,7 @@ function DocForm() {
                 onChange={(e) => {
                   setpassword(e.target.value);
                 }}
-                maxLength={35}
+                maxLength={10}
               />
             </FormControl>
             <FormControl id="email" isRequired>

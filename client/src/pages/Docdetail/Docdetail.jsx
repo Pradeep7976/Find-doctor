@@ -41,7 +41,7 @@ import Review from "../../components/review/Review";
 export default function Simple() {
   const params = useParams();
   const did = params.did;
-  const url = "http://localhost:7000";
+  const url = "https://famous-puce-raven.cyclic.app";
 
   const [doctor, setdoctor] = useState([]);
   const [timings, settimings] = useState([]);
@@ -124,7 +124,10 @@ export default function Simple() {
               <br />
               <Text paddingTop={2} fontSize={"md"} fontWeight={"extrabold"}>
                 {doctor.map((doc) => {
-                  return doc.specialization;
+                  return (
+                    doc.specialization.charAt(0).toUpperCase() +
+                    doc.specialization.slice(1)
+                  );
                 })}
               </Text>
               <Text

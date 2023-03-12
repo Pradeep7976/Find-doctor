@@ -21,7 +21,7 @@ function Loginp() {
   const [passwordd, setpassword] = useState("");
   const dispatch = useDispatch();
 
-  const Port = "http://localhost:7000";
+  const Port = "https://famous-puce-raven.cyclic.app";
   let navigate = useNavigate();
   function regestr() {
     navigate("/preg");

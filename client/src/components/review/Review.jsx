@@ -1,11 +1,7 @@
 import {
-  Avatar,
   Box,
   chakra,
-  Container,
   Flex,
-  Icon,
-  SimpleGrid,
   Text,
   useColorModeValue,
   HStack,
@@ -42,7 +38,7 @@ function Rating({ rating, numReviews }: RatingProps) {
 
 function TestimonialCard(props) {
   // const { review, stars } = props;
-  const url = "http://localhost:7000";
+  const url = "https://famous-puce-raven.cyclic.app";
   const [name, setname] = useState("");
   useEffect(() => {
     const dat = {
@@ -53,6 +49,7 @@ function TestimonialCard(props) {
       console.log("Username" + result.data);
       setname(result.data);
     });
+    // eslint-disable-next-line
   }, []);
 
   console.log("review");

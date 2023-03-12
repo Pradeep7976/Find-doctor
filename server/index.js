@@ -5,10 +5,10 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
+require("dotenv").config();
 
 const app = express();
 
-const Recep = require("./model/reception");
 const Docrecep = require("./model/docreg");
 const Secret = "jwtsecret";
 const patient = require("./model/patient");
@@ -85,7 +85,7 @@ const verifyJwt = (req, res, next) => {
   }
 };
 app.get("/", (req, res) => {
-  res.send("Server is not crashed");
+  res.send("Server is not crashed this is msg u have written");
 });
 app.get("/isUserAuth", verifyJwt, (req, res) => {
   res.json({ auth: true });
@@ -97,10 +97,13 @@ app.post("/plogin", async (req, res) => {
   const password = req.body.password;
   console.log(email1);
   console.log(password);
-  const User = await patient.findOne({ email1 });
+  const User = await patient.findOne({ email: email1 });
+  // const Passwordcorrect =
+  //   User === null ? false : await bcrypt.compare(password, User.password);
   const Passwordcorrect =
     User === null ? false : await bcrypt.compare(password, User.password);
   if (!(User && Passwordcorrect)) {
+    // console.log(await bcrypt.compare("traveller", User.password));
     return res.status(401).json({
       error: "invalid email or Password",
     });
@@ -229,6 +232,15 @@ app.post("/docreg", async (req, res) => {
           did = result.rows[0].did;
           // client.query(`insert into id values($1,$2)`, [idi,did + 1]);
           client.query(`update id set did = $1 where did =$2;`, [did + 1, did]);
+          client.query(
+            `select * from doctor where did = $1`,
+            [did],
+            (err, resu) => {
+              if (resu.rows()) {
+                console.log("found ");
+              }
+            }
+          );
           await client.query(
             `insert into doctor values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
             [
@@ -291,7 +303,7 @@ app.get("/del", (req, res) => {
     res.send(err);
   }
 });
-////////////////////////////////////////////////////       ALL DOCTORS    s     /////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////       ALL DOCTORS         /////////////////////////////////////////////////////////////////
 
 app.get("/doctors", async (req, res) => {
   try {
@@ -342,9 +354,25 @@ app.post("/search/:city/:spec", (req, res) => {
   const user = req.body.username;
   const city = req.params.city;
   const spec = req.params.spec;
+  // try {
+  //   client.query(
+  //     `select * from doctor join adress on doctor.did=adress.did where adress.city=$1 and doctor.specialization=$2 ;`,
+  //     [city, spec],
+  //     (err, result) => {
+  //       if (err) {
+  //         res.send("err");
+  //       } else {
+  //         res.send(result.rows);
+  //         console.log(result.rows);
+  //       }
+  //     }
+  //   );
+  // } catch (err) {
+  //   res.send(err);
+  // }
   try {
     client.query(
-      `select * from doctor join adress on doctor.did=adress.did where adress.city=$1 and doctor.specialization=$2 ;`,
+      `select distinct doctor.did, doctor.specialization, doctor.fname, doctor.lname, doctor.description ,doctor.yearofexperience  from doctor,adress where doctor.did=adress.did and adress.city=$1 and doctor.specialization=$2 ;`,
       [city, spec],
       (err, result) => {
         if (err) {
@@ -371,8 +399,8 @@ app.post("/filter/:city/:spec/:filter/:filterval", (req, res) => {
   try {
     if (filter == "gender") {
       client.query(
-        `select * from doctor join adress on doctor.did=adress.did where adress.city=$1 and specialization=$2 and gender=$3 ;`,
-        [city, spec, filterval],
+        `select distinct doctor.did, doctor.specialization, doctor.fname, doctor.lname, doctor.description ,doctor.yearofexperience  from doctor,adress where doctor.did=adress.did and adress.city=$1 and specialization=$2 and gender=$3 ;`,
+        [city, spec, filterval.toUpperCase()],
         (err, result) => {
           if (err) {
             res.send(err);
@@ -384,7 +412,7 @@ app.post("/filter/:city/:spec/:filter/:filterval", (req, res) => {
       );
     } else if (filter == "Area") {
       client.query(
-        `select * from doctor join adress on doctor.did=adress.did where adress.city=$1 and specialization=$2 and adress.street=$3 ;`,
+        `select distinct doctor.did, doctor.specialization, doctor.fname, doctor.lname, doctor.description ,doctor.yearofexperience  from doctor,adress where doctor.did=adress.did and adress.city=$1 and specialization=$2 and adress.street=$3 ;`,
         [city, spec, filterval],
         (err, result) => {
           if (err) {
@@ -528,4 +556,5 @@ app.get("/upload", (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.listen(7000 || process.env.PORT, function () {
   console.log(`Server started on port 7000 `);
+  console.log(`Server started on port ${process.env.PORT} `);
 });

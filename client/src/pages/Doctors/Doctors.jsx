@@ -26,8 +26,8 @@ import "./Doctors.css";
 import Docc from "../../components/Docc/Docc";
 import Nav from "../../components/Navbar";
 
-const url1 = "http://localhost:7000/doctors";
-const port = "http://localhost:7000";
+const url1 = "https://famous-puce-raven.cyclic.app/doctors";
+const port = "https://famous-puce-raven.cyclic.app/";
 
 function Doctors() {
   const [docdatai, setdocdatai] = useState([]);
@@ -97,8 +97,9 @@ function Doctors() {
       .then((resp) => {
         if (resp.data.length === 0) {
           alert("NO doctors found");
+        } else {
+          setdocdatai(resp.data);
         }
-        setdocdatai(resp.data);
       });
   }
   return (
@@ -120,14 +121,20 @@ function Doctors() {
             onChange={(e) => {
               setarea(e.target.value);
             }}
+            maxLength={20}
           />
           <Input
             width={180}
             height={35}
             placeholder="Specialization"
+            value={spec}
             onChange={(e) => {
-              setspec(e.target.value);
+              if (parseInt(e.target.value.charAt(e.target.value.length - 1))) {
+                alert("No integer alert");
+                return;
+              } else setspec(e.target.value);
             }}
+            maxLength={30}
           />
           <Button
             className="sbtn"

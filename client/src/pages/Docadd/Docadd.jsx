@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 export default function Docadd() {
   let navigate = useNavigate();
 
-  const url = "http://localhost:7000";
+  const url = "https://famous-puce-raven.cyclic.app";
   /////////states/////////////////
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
@@ -44,7 +44,7 @@ export default function Docadd() {
   // eslint-disable-next-line
   const [address, setaddress] = useState([]);
   //////////end states////////////////
-  const port = "http://localhost:7000";
+  const port = "https://famous-puce-raven.cyclic.app";
   useEffect(() => {
     axios
       .get(port + "/isUserAuth", {
@@ -129,8 +129,14 @@ export default function Docadd() {
               <Input
                 id="first-name"
                 placeholder="First name "
+                value={fname}
                 onChange={(e) => {
-                  setfname(e.target.value);
+                  if (
+                    parseInt(e.target.value.charAt(e.target.value.length - 1))
+                  ) {
+                    alert("No integer alert");
+                    return;
+                  } else setfname(e.target.value);
                 }}
                 maxLength={20}
               />
@@ -143,8 +149,14 @@ export default function Docadd() {
               <Input
                 id="last-name"
                 placeholder="First name "
+                value={lname}
                 onChange={(e) => {
-                  setlname(e.target.value);
+                  if (
+                    parseInt(e.target.value.charAt(e.target.value.length - 1))
+                  ) {
+                    alert("No integer alert");
+                    return;
+                  } else setlname(e.target.value);
                 }}
                 maxLength={20}
               />
@@ -159,8 +171,14 @@ export default function Docadd() {
               <Input
                 id="first-name"
                 placeholder="Specialization "
+                value={specialization}
                 onChange={(e) => {
-                  setspecialization(e.target.value);
+                  if (
+                    parseInt(e.target.value.charAt(e.target.value.length - 1))
+                  ) {
+                    alert("No integer alert");
+                    return;
+                  } else setspecialization(e.target.value);
                 }}
                 maxLength={20}
               />
@@ -212,13 +230,6 @@ export default function Docadd() {
                     }}
                   >
                     F
-                  </MenuItem>
-                  <MenuItem
-                    onClick={(e) => {
-                      setgender("T");
-                    }}
-                  >
-                    T
                   </MenuItem>
                 </MenuList>
               </Menu>
@@ -312,16 +323,24 @@ export default function Docadd() {
                   <Input
                     id="first-name"
                     placeholder="city"
-                    onChange={(e) => {
-                      setcity(e.target.value);
-                    }}
                     value={city}
+                    onChange={(e) => {
+                      if (
+                        parseInt(
+                          e.target.value.charAt(e.target.value.length - 1)
+                        )
+                      ) {
+                        alert("No integer alert");
+                        return;
+                      } else setcity(e.target.value);
+                    }}
+                    // value={city}
                     maxlength={20}
                   />
                 </FormControl>
               </Flex>
 
-              <FormControl mr="5%">
+              <FormControl mr="5%" isRequired>
                 <FormLabel htmlFor="first-name" fontWeight={"normal"}>
                   Complete Address
                 </FormLabel>
@@ -353,7 +372,7 @@ export default function Docadd() {
               </ButtonGroup>
             </VStack>
           </FormControl>
-          <FormControl mr="5%">
+          <FormControl mr="5%" isRequired>
             <FormLabel htmlFor="first-name" fontWeight={"normal"}>
               Description
             </FormLabel>
@@ -369,7 +388,7 @@ export default function Docadd() {
             />
           </FormControl>
           <Flex paddingTop={2}>
-            <FormControl mr="5%">
+            <FormControl mr="5%" isRequired>
               <FormLabel htmlFor="first-name" fontWeight={"normal"}>
                 Phone no
               </FormLabel>
@@ -386,7 +405,7 @@ export default function Docadd() {
               />
             </FormControl>
 
-            <FormControl>
+            <FormControl isRequired>
               <FormLabel htmlFor="last-name" fontWeight={"normal"}>
                 Consultation fee
               </FormLabel>
